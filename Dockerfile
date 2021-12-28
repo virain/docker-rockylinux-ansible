@@ -14,16 +14,13 @@ rm -f /lib/systemd/system/basic.target.wants/*;\
 rm -f /lib/systemd/system/anaconda.target.wants/*;
 
 RUN sed -e 's|^mirrorlist=|#mirrorlist=|g' \
-    -e 's|^#baseurl=http://dl.rockylinux.org/$contentdir|baseurl=https://mirrors.sjtug.sjtu.edu.cn/rocky|g' \
+    -e 's|^#baseurl=http://dl.rockylinux.org/$contentdir|baseurl=https://mirrors.aliyun.com/rockylinux|g' \
     -i.bak \
     /etc/yum.repos.d/Rocky-*.repo
-
 
 # Install requirements.
 RUN dnf makecache  \
  && dnf -y install rpm epel-release initscripts \
- && sed -i 's|^#baseurl=https://download.fedoraproject.org/pub|baseurl=https://mirrors.aliyun.com|' /etc/yum.repos.d/epel* \
- && sed -i 's|^metalink|#metalink|' /etc/yum.repos.d/epel* \
  && dnf -y update \
  && dnf -y install \
       crontabs \
